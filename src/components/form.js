@@ -1,4 +1,5 @@
 import { Component } from "react";
+import '../styles/styles.css';
 
 class Form extends Component {
     constructor() {
@@ -63,59 +64,70 @@ class Form extends Component {
         console.log(e.target.value)
         console.log("va");
     }
-    render() {
+     render() {
         return (
-            <div className="App">
-                <div>
-                    <label>Saldo Actual en USD: </label>
-                    <input type="text" value={this.state.saldo} readOnly />
+            <div>
+                <header className="header">
+                    <h2>Billetera Virtual</h2>
+                </header>
+                <div className="container">
+                    <div className="form-group">
+                        <label>Saldo Actual en USD:</label>
+                        <input type="text" className="form-control" value={this.state.saldo} readOnly />
+                    </div>
+                    <div className="form-group">
+                        <label>Seleccione una Cripto:</label>
+                        <select className="form-control" value={this.state.criptoEnUso.nombre} onChange={this.cambiarCripto}>
+                            <option value="">Seleccione una Cripto</option>
+                            {this.state.criptos.map(c => <option key={c.nombre} value={c.nombre}>{c.nombre} {c.simbolo.toUpperCase()}</option>)}
+                        </select>
+                    </div>
+                    <div className="form-group">
+                        <label>Cotización:</label>
+                        <input type="text" className="form-control" value={this.state.criptoEnUso.valor || ''} readOnly />
+                    </div>
+                    <div className="form-group">
+                        <label>Cantidad:</label>
+                        <input type="text" className="form-control" value={this.state.cantidad} onChange={this.cambiarCantidad} min={0} />
+                    </div>
+                    <div className="form-group">
+                        <label>Total:</label>
+                        <input type="text" className="form-control" value={this.state.criptoEnUso.valor * this.state.cantidad ? this.state.criptoEnUso.valor * this.state.cantidad : 0} readOnly />
+                    </div>
+                    <button className="btn btn-primary" onClick={this.comprarCripto}>Comprar</button>
+                    <div className="table-container">
+                        <table className="table table-striped table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>Nombre</th>
+                                    <th>Moneda</th>
+                                    <th>Cantidad</th>
+                                    <th>Valor en USD</th>
+                                    <th>Fecha</th>
+                                    <th>Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {this.state.transacciones.map(t => (
+                                    <tr key={t.id}>
+                                        <td>{t.nombre}</td>
+                                        <td>{t.cripto}</td>
+                                        <td>{t.cantidad}</td>
+                                        <td>${t.total}</td>
+                                        <td>{t.fecha}</td>
+                                        <td>
+                                            <button className="btn btn-danger">Vender</button>
+                                            <button className="btn btn-secondary">Eliminar</button>
+                                        </td>
+                                    </tr>
+                                ))}
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
-                <select value={this.state.criptoEnUso.nombre} onChange={this.cambiarCripto}>
-                    <option value="">Seleccione una Cripto</option>
-                    {this.state.criptos.map(c => <option key={c.nombre} value={c.nombre}>{c.nombre} {c.simbolo.toUpperCase()}</option>)}
-                </select>
-                <div>
-                    <label>Cotización: </label>
-                    <input type="text" value={this.state.criptoEnUso.valor} readOnly />
-                </div>
-                <div>
-                    <label>Cantidad: </label>
-                    <input type="text" value={this.state.cantidad} onChange={this.cambiarCantidad} min={0} />
-                </div>
-                <div>
-                    <label>Total: </label>
-                    <input type="text" value={this.state.criptoEnUso.valor * this.state.cantidad ? this.state.criptoEnUso.valor * this.state.cantidad : 0} readOnly />
-                </div>
-                <button onClick={this.comprarCripto}>Comprar</button>
-                <table className="table">
-                    <thead>
-                        <tr className="list">
-                            <th>Nombre</th>
-                            <th>Moneda</th>
-                            <th>Cantidad</th>
-                            <th>Valor en USD</th>
-                            <th>Fecha</th>
-                            <th>Acciones</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {this.state.transacciones.map(t => (
-                            <tr key={t.id}>
-                                <td>{t.nombre}</td>
-                                <td>{t.cripto}</td>
-                                <td>{t.cantidad}</td>
-                                <td>${t.total}</td>
-                                <td>{t.fecha}</td>
-                                <td>
-                                    <button>Vender</button>
-                                </td>
-                            </tr>
-                        ))}
-                    </tbody>
-                </table>
             </div>
-        )
+        );
     }
 }
 
-export default Form
+export default Form;
