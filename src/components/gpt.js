@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
-import Form from './components/form';
-import './App.css';
+import '../App.css';
 
-function App() {
+function Gpt() {
   const [saldo, setSaldo] = useState(100000);
   const [cripto, setCripto] = useState('');
   const [cotizacion, setCotizacion] = useState('');
@@ -111,7 +110,6 @@ function App() {
         <input type="text" value={total} readOnly />
       </div>
       <button onClick={modoVenta ? handleVender : handleComprar}>{modoVenta ? 'Vender' : 'Comprar'}</button>
-      <Form/>
       <table>
         <thead>
           <tr>
@@ -143,4 +141,4 @@ function App() {
   );
 }
 
-export default App;
+export default Gpt;

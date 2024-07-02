@@ -1,16 +1,20 @@
 
 body {
-    background-color: #000000; 
+    background-color: #181a20; 
 }
 
 .container {
+    border: 1px solid rgba(220, 220, 220, 0);
     max-width: 800px;
     height: 700px;
     margin: 50px auto;
     padding: 20px;
-    background-color: #1a1c1b;
+    background-color: #0D0D0D;
     border-radius: 10px;
-    
+    transition: all .15s ease-in-out;
+}
+.container:hover{
+    border: 1px solid #22c470;
 }
 
 .header {
@@ -19,7 +23,7 @@ body {
     height: 130px;
     margin-bottom: 50px;
     justify-content: center;
-    background-color: #000000; 
+    background-color: #181a20; 
 }
 
 .header h2 {
