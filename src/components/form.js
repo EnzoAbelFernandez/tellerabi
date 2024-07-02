@@ -145,7 +145,7 @@ class Form extends Component {
                     </div>
                     <div className="form-group">
                         <label>Cantidad:</label>
-                        <input type="number" style={error ? {border: "1px solid red"} : null} className="form-control" value={cantidad} onChange={this.cambiarCantidad} min={0} max={transaccionSeleccionada? transaccionSeleccionada.cantidad : null}/>
+                        <input type="number" style={error ? {border: "1px solid #842029"} : null} className="form-control" value={cantidad} onChange={this.cambiarCantidad} min={0} max={transaccionSeleccionada? transaccionSeleccionada.cantidad : null}/>
                         {(error && modoVenta) && <div className="alert alert-danger">{error}</div>}
                     </div>
                     <div className="form-group">
