@@ -94,9 +94,9 @@ class Form extends Component {
                         <label>Total:</label>
                         <input type="text" className="form-control" value={this.state.criptoEnUso.valor * this.state.cantidad ? this.state.criptoEnUso.valor * this.state.cantidad : 0} readOnly />
                     </div>
-                    <button className="btn btn-primary" onClick={this.comprarCripto}>Comprar</button>
-                    <div className="table-container">
-                        <table className="table table-striped table-bordered">
+                    <button className="btn button" onClick={this.comprarCripto}>Comprar</button>
+                    <div className="table-container" >
+                        <table className="table table-striped table-bordered table-hover  ">
                             <thead>
                                 <tr>
                                     <th>Nombre</th>
