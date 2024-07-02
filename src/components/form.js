@@ -2,6 +2,7 @@ import React, { Component } from "react"
 import '../styles/styles.css'
 import List from "./list"
 import UserProfile from "./userProfile"
+import logo from "../assets/logoN.png"
 
 class Form extends Component {
     constructor() {
@@ -123,15 +124,10 @@ class Form extends Component {
         return (
             <div>
                 <header className="header">
-                    <h2>Billetera Virtual</h2>
+                    <img style={{width: "200px", height: "200px"}} src={logo}></img>
                 </header>
                 <UserProfile saldo={saldo}></UserProfile>
                 <div className="container">
-                    <div className="form-group">
-                        <label>Saldo Actual en USD:</label>
-                        <input type="text" className="form-control" value={saldo} readOnly />
-                        {(error && !modoVenta) && <div className="alert alert-danger">{error}</div>}
-                    </div>
                     <div className="form-group">
                         <label>Seleccione una Cripto:</label>
                         <select className="form-control" value={criptoEnUso.nombre || ''} onChange={this.cambiarCripto}>
@@ -155,6 +151,7 @@ class Form extends Component {
                     <div className="form-group">
                         <label>Total:</label>
                         <input type="text" className="form-control" value={criptoEnUso ? criptoEnUso.valor * cantidad : 0} readOnly />
+                        {(error && !modoVenta) && <div className="alert alert-danger">{error}</div>}
                     </div>
                     <button className="btn button" onClick={modoVenta ? this.venderCripto : this.comprarCripto}>{modoVenta ? "Vender" : "Comprar"}</button>
                     <List criptos={criptos} transacciones={transacciones} actualizar={this.actualizar}></List>

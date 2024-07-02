@@ -11,28 +11,35 @@ body {
     background-color: #141414;
     border-radius: 10px;
     transition: all .15s ease-in-out;
+    margin-top: 15px;
 }
 .container:hover{
     border: 1px solid #22c470;
 }
 
+.alert {
+    padding: 0.35rem 1.25rem;
+    margin-top: 1px;
+    border-radius: 8px;
+    margin: 0 1px;
+}
 
 .table {
     border-collapse: separate;
-    background-color: #2f2f2f!important;
+    background-color: #1f1f1f!important;
 }
 .lista td {
     vertical-align: middle !important;
 }
 .lista tr th {
-    background-color: #2f2f2f;
-    color: #bebdbd;
+    background-color: #1f1f1f;
+    color: #ffffff;
 }
 tbody {
-    background-color: #2f2f2f;
+    background-color: #1f1f1f;
 }
 tbody tr td{
-    color: #bebdbd;
+    color: #ffffff;
 }
 .table-bordered {
     border: 1px solid #dee2e6 !important;
