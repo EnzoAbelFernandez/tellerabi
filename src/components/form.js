@@ -1,5 +1,7 @@
 import React, { Component } from "react"
 import '../styles/styles.css'
+import List from "./list"
+import UserProfile from "./userProfile"
 
 class Form extends Component {
     constructor() {
@@ -48,6 +50,7 @@ class Form extends Component {
     comprarCripto = () => {
         const { criptoEnUso, cantidad, saldo, transacciones } = this.state
         const totalCompra = criptoEnUso.valor * cantidad
+        this.setState({error: ''})
 
         if (totalCompra > saldo){
             const error = `Disponible: $${saldo}`
@@ -106,6 +109,15 @@ class Form extends Component {
         })
     }
 
+    actualizar = (t, criptoSeleccionada) => {
+        this.setState({
+            criptoEnUso: criptoSeleccionada,
+            cantidad: t.cantidad,
+            modoVenta: true,
+            transaccionSeleccionada: t
+        })
+    }
+
     render() {
         const { saldo, criptoEnUso, cantidad, criptos, transacciones, modoVenta, transaccionSeleccionada, error } = this.state
         return (
@@ -113,6 +125,7 @@ class Form extends Component {
                 <header className="header">
                     <h2>Billetera Virtual</h2>
                 </header>
+                <UserProfile saldo={saldo}></UserProfile>
                 <div className="container">
                     <div className="form-group">
                         <label>Saldo Actual en USD:</label>
@@ -144,34 +157,7 @@ class Form extends Component {
                         <input type="text" className="form-control" value={criptoEnUso ? criptoEnUso.valor * cantidad : 0} readOnly />
                     </div>
                     <button className="btn button" onClick={modoVenta ? this.venderCripto : this.comprarCripto}>{modoVenta ? "Vender" : "Comprar"}</button>
-                    <div className="table-container">
-                        <table className="table table-striped table-bordered table-hover">
-                            <thead>
-                                <tr>
-                                    <th>Nombre</th>
-                                    <th>Moneda</th>
-                                    <th>Cantidad</th>
-                                    <th>Valor en USD</th>
-                                    <th>Fecha</th>
-                                    <th>Acciones</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {transacciones.map(t => (
-                                    <tr key={t.id}>
-                                        <td>{t.nombre}</td>
-                                        <td>{t.cripto}</td>
-                                        <td>{t.cantidad}</td>
-                                        <td>${t.total}</td>
-                                        <td>{t.fecha}</td>
-                                        <td>
-                                            <button className="btn btn-danger" onClick={() => this.empezarVenta(t)}>Vender</button>
-                                        </td>
-                                    </tr>
-                                ))}
-                            </tbody>
-                        </table>
-                    </div>
+                    <List criptos={criptos} transacciones={transacciones} actualizar={this.actualizar}></List>
                 </div>
             </div>
         )

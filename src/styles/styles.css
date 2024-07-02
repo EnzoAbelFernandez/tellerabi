@@ -6,16 +6,55 @@ body {
 .container {
     border: 1px solid rgba(220, 220, 220, 0);
     max-width: 800px;
-    height: 700px;
     margin: 50px auto;
     padding: 20px;
-    background-color: #0D0D0D;
+    background-color: #141414;
     border-radius: 10px;
     transition: all .15s ease-in-out;
 }
 .container:hover{
     border: 1px solid #22c470;
 }
+
+
+.table {
+    border-collapse: separate;
+    background-color: #2f2f2f!important;
+}
+.lista td {
+    vertical-align: middle !important;
+}
+.lista tr th {
+    background-color: #2f2f2f;
+    color: #bebdbd;
+}
+tbody {
+    background-color: #2f2f2f;
+}
+tbody tr td{
+    color: #bebdbd;
+}
+.table-bordered {
+    border: 1px solid #dee2e6 !important;
+}
+.table thead th {
+    border-bottom: none !important;
+    border-top: none !important;
+}
+.table tbody tr, 
+.table tbody td {
+    border-top: none !important;
+    border-bottom: none !important;
+}
+.table thead th:first-child, 
+.table tbody td:first-child {
+    border-left: none !important;
+}
+.table thead th:last-child, 
+.table tbody td:last-child {
+    border-right: none !important;
+}
+
 
 .header {
     display: flex;
@@ -36,19 +75,25 @@ body {
 
 .form-group {
     margin-bottom: 20px;
+   
+}
+
+.form-group input {
+    background-color: #1f1f1f!important;
+    color: #ffffff;
 }
 
 .form-group label {
     font-family:sans-serif;
     font-size: 20px; 
-    color: #717975;
+    color: #ffffff;
 }
 
 .form-control{
-    background-color: #2f2f2f;
+    background-color: #1f1f1f;
     border-radius: 8px;
-    border: 1px solid #747272;
-    color:#bebdbd ;
+    border: 1px solid #74727200;
+    color: #ffffff;
 }
 
 .form-control[readonly] {
@@ -102,10 +147,6 @@ button:hover {
    
 }
 
-.table th {
-   background-color: #918f8f;
-   
-}
 
 
 
