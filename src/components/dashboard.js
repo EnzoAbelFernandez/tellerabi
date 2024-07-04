@@ -1,10 +1,9 @@
 import React from 'react';
-
+import Form from './form';
 const Dashboard = () => {
   return (
     <div>
-      <h2>Dashboard</h2>
-      <p>Bienvenido al dashboard del exchange de criptomonedas.</p>
+      <Form />
     </div>
   );
 };

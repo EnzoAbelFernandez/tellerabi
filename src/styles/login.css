@@ -1,0 +1,61 @@
+body {
+    background-color: #181a20; 
+  }
+  
+  .card {
+    border-radius: 15px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    background-color: #333436;
+  }
+  
+  .card-title {
+    margin-bottom: 1.5rem;
+    color: white;
+  }
+  
+  .btn {
+    background-color: #22c470;
+    border: none;
+  }
+  
+  .btn:hover {
+    background-color: #22c470;
+  }
+  
+  .form-label {
+    color: white;
+  }
+
+  /**/
+
+  .swal-popup {
+    background-color: #181a20 !important;
+    border: 1px solid #888 !important;
+    padding: 20px !important;
+    width: 80% !important;
+    max-width: 500px !important;
+  }
+  
+  .swal-title {
+    color: white !important;
+  }
+  
+  .swal-content {
+    color: white !important;
+  }
+  
+  .swal-button {
+    background-color: #4CAF50 !important;
+    color: white !important;
+    border: none !important;
+    padding: 10px 20px !important;
+    font-size: 16px !important;
+    cursor: pointer !important;
+  }
+  
+  .swal-button:hover {
+    background-color: #45a049 !important;
+  }
+  div:where(.swal2-container) div:where(.swal2-popup){
+    background-color: #181a20;
+  }
