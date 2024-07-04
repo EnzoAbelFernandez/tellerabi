@@ -20,6 +20,10 @@ class Form extends Component {
         }
     }
 
+    componentDidUpdate(){
+        this.actualizarData()
+    }
+
     componentDidMount() {
         this.fetchData()
         this.fetchDataUsuario()
@@ -60,7 +64,6 @@ class Form extends Component {
 
     //actualiza la data de la fakeapi
     actualizarData = () => {
-        console.log("se");
         const data = {
             usuario: this.state.usuario,
             saldo: this.state.saldo,
@@ -74,7 +77,6 @@ class Form extends Component {
             body: JSON.stringify(data)
           })
             .then(response => response.json())
-            .then(data => console.log('Usuario actualizado:', data))
             .catch(error => console.error('Error al actualizar usuario:', error))
     }
 
@@ -149,6 +151,7 @@ class Form extends Component {
         }
 
         // si la cantidad de venta es igual a la cantidad poseida, elimina la transaccion directamente
+        // eslint-disable-next-line
         if (cantidadVenta == transaccionSeleccionada.cantidad) {
             transaccionesActualizadas = transacciones.filter(t => t.id !== transaccionSeleccionada.id).map((transaccion, index) => ({
                 ...transaccion,
@@ -225,7 +228,6 @@ class Form extends Component {
                     </div>
                     <button className="btn button" onClick={modoVenta ? this.venderCripto : this.comprarCripto}>{modoVenta ? "Vender" : "Comprar"}</button>
                     <List criptos={criptos} transacciones={transacciones} actualizar={this.actualizar}></List>
-                    <button onClick={() => this.actualizarData()}>aaa</button>
                 </div>
             </div>
         )

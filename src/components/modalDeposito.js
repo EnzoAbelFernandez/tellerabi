@@ -39,6 +39,7 @@ const Modal = ({ closeModal, ingresar }) => {
         <div>
             <div className="modal">
                 <div className="modal-content">
+                    <span className="close" onClick={closeModal}>&times;</span>
                     <h2>Depositos:</h2>
                     <form>
                         <div style={{ display: "flex", gap: "10px" }}>

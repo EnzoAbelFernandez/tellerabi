@@ -1,38 +1,14 @@
 [
   {
     "usuario": "Santi",
-    "saldo": 43999.44,
+    "saldo": 480931,
     "transacciones": [
       {
         "id": 1,
         "nombre": "usuario",
-        "cripto": "Ethereum",
-        "cantidad": "1",
-        "total": 3135.81,
-        "fecha": "4/7/2024"
-      },
-      {
-        "id": 2,
-        "nombre": "usuario",
         "cripto": "Bitcoin",
         "cantidad": "3",
-        "total": 174537,
-        "fecha": "4/7/2024"
-      },
-      {
-        "id": 3,
-        "nombre": "usuario",
-        "cripto": "Solana",
-        "cantidad": "125",
-        "total": 16743.75,
-        "fecha": "4/7/2024"
-      },
-      {
-        "id": 4,
-        "nombre": "usuario",
-        "cripto": "Bitcoin",
-        "cantidad": "2",
-        "total": 116658,
+        "total": 175314,
         "fecha": "4/7/2024"
       }
     ]
