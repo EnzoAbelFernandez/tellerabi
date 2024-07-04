@@ -23,6 +23,7 @@ class Form extends Component {
         this.fetchData()
     }
 
+    // fetch a la api de criptos para obtener el nombre, valor y cotizacion de las cripto.
     fetchData() {
         const url = 'https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&ids=bitcoin,ethereum,tether,litecoin,cardano,solana'
         fetch(url)
@@ -38,25 +39,31 @@ class Form extends Component {
             .catch(err => console.error('error:' + err))
     }
 
+    // actualiza el state criptoEnUso con la cripto que se seleccione en el input select
     cambiarCripto = (e) => {
         const criptoSeleccionada = this.state.criptos.find(cripto => cripto.nombre === e.target.value)
         this.setState({ criptoEnUso: criptoSeleccionada })
     }
 
+    // actualiza el state cantidad con la cantidad que se ingrese
     cambiarCantidad = (e) => {
         const cantidad = e.target.value
         this.setState({ cantidad })
     }
 
+    // genera las transacciones de compra de cripto
     comprarCripto = () => {
         const { criptoEnUso, cantidad, saldo, transacciones } = this.state
-        const totalCompra = criptoEnUso.valor * cantidad
-        this.setState({error: ''})
+        const totalCompra = criptoEnUso.valor * cantidad //calcula el total de la compra
+        this.setState({error: ''}) // se resetea el error por si habia alguno antes
 
+        // si el saldo es menor que el total de la compra genera un error
         if (totalCompra > saldo){
             const error = `Disponible: $${saldo}`
             this.setState({error})
         }
+
+        // si está todo correcto genera la transacción y actualiza el saldo, las transacciones añadiendo la nueva y resetea la cantidad
         if (criptoEnUso && cantidad && totalCompra <= saldo) {
             const nuevoSaldo = saldo - totalCompra
             const nuevaTransaccion = {
@@ -76,6 +83,7 @@ class Form extends Component {
         }
     }
 
+    // activa el modoVenta, setea la cripto de la transaccion seleccionada como criptoEnUso, la cantidad, y la transaccion seleccionada en transaccionSeleccionada
     empezarVenta = (t) => {
         const criptoSeleccionada = this.state.criptos.find(cripto => cripto.nombre === t.cripto)
         this.setState({
@@ -86,21 +94,29 @@ class Form extends Component {
         })
     }
 
+    // modifica las transacciones al vender cripto y actualiza el saldo
     venderCripto = () => {
         const { saldo, criptoEnUso, transacciones, transaccionSeleccionada } = this.state
         const cantidadVenta = this.state.cantidad
-        const totalVenta = cantidadVenta * criptoEnUso.valor
+        const totalVenta = cantidadVenta * criptoEnUso.valor // calcula el total de la venta
         let transaccionesActualizadas
+
+        // si la cantidad a vender supera la cantidad poseida genera un error y corta la funcion
         if (cantidadVenta > transaccionSeleccionada.cantidad) {
             const error = `Disponible: ${transaccionSeleccionada.cantidad} ${criptoEnUso.simbolo.toUpperCase()}`
             this.setState({error})
             return
         }
+
+        // si la cantidad de venta es igual a la cantidad poseida, elimina la transaccion directamente
         if (cantidadVenta == transaccionSeleccionada.cantidad) {
             transaccionesActualizadas = transacciones.filter(t => t.id !== transaccionSeleccionada.id)
-        } else if (cantidadVenta && criptoEnUso && transaccionSeleccionada) {
+        } 
+        // si la cantidad de venta es menor que la cantidad poseida, le resta la cantidad y el valor vendido a la poseida
+        else if (cantidadVenta && criptoEnUso && transaccionSeleccionada) {
             transaccionesActualizadas = transacciones.map(t => t.id === transaccionSeleccionada.id ? { ...t, cantidad: t.cantidad - cantidadVenta, total: t.total - totalVenta} : t)
         }
+        // actualiza todos los estados correspondientes y desactiva el modoVenta
         this.setState({
             saldo: saldo + totalVenta,
             transacciones: transaccionesActualizadas,
@@ -110,6 +126,7 @@ class Form extends Component {
         })
     }
 
+    // funcion para que el componente de la lista pueda actualizar el state
     actualizar = (t, criptoSeleccionada) => {
         this.setState({
             criptoEnUso: criptoSeleccionada,
@@ -119,14 +136,24 @@ class Form extends Component {
         })
     }
 
+    // funciones para que los modales puedan retirar e ingresar dinero
+    ingresar = (valor) => {
+        const saldo = this.state.saldo
+        this.setState({saldo : saldo + valor})
+    }
+    retirar = (valor) => {
+        const saldo = this.state.saldo
+        this.setState({saldo : saldo - valor})
+    }
+
     render() {
         const { saldo, criptoEnUso, cantidad, criptos, transacciones, modoVenta, transaccionSeleccionada, error } = this.state
         return (
             <div>
                 <header className="header">
-                    <img style={{width: "200px", height: "200px"}} src={logo}></img>
+                    <img style={{width: "200px", height: "200px"}} src={logo} alt="logo"></img>
                 </header>
-                <UserProfile saldo={saldo}></UserProfile>
+                <UserProfile saldo={saldo} ingresar={this.ingresar} retirar={this.retirar}></UserProfile>
                 <div className="container">
                     <div className="form-group">
                         <label>Seleccione una Cripto:</label>

@@ -4,27 +4,29 @@ import avatarGoku from '../assets/goku.jpg'
 import Modal from './modalDeposito';
 import ModalRetiro from './modalRetiro';
 
-const UserProfile = ({saldo}) => {
-    // Modal para Depositos
+const UserProfile = ({saldo, ingresar, retirar}) => {
+
     const [formVisible, setFormVisible] = useState(false);
+
+    // abre el modal
     const handleButtonClick = () =>{
         setFormVisible(true);
     }
-
+    // cierra el modal
     const closeModal = () => {
         setFormVisible(false);
     }
 
 
     // Modal para Retiros
-    const [isWithdrawalModalOpen, setIsWithdrawalModalOpen] = useState(false);
+    const [retiroOpen, setRetiroOpen] = useState(false);
 
-    const handleWithdrawalButtonClick = () => {
-        setIsWithdrawalModalOpen(true);
+    const handleRetiro = () => {
+        setRetiroOpen(true);
     };
 
-    const closeWithdrawalModal = () => {
-        setIsWithdrawalModalOpen(false);
+    const cerrarRetiro = () => {
+        setRetiroOpen(false);
     };
 
 
@@ -49,9 +51,9 @@ const UserProfile = ({saldo}) => {
                     <button onClick={handleButtonClick}>
                         Depositar
                     </button>
-                    {formVisible && <Modal closeModal={closeModal}/>}
-                    <button onClick={handleWithdrawalButtonClick}>Retirar</button>
-                    {isWithdrawalModalOpen && <ModalRetiro closeModal={closeWithdrawalModal} />}
+                    {formVisible && <Modal ingresar={ingresar} closeModal={closeModal}/>}
+                    <button onClick={handleRetiro}>Retirar</button>
+                    {retiroOpen && <ModalRetiro retirar={retirar} closeModal={cerrarRetiro} />}
                 </div>
             </div>
         </div>

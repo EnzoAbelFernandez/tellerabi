@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import '../styles/login.css'; 
+import '../styles/login.css';
 import Swal from 'sweetalert2';
 
 
@@ -22,12 +22,12 @@ const Login = ({ setAuthenticated }) => {
         buttons: true,
         dangerMode: true,
         customClass: {
-                popup: 'swal-popup',
-                title: 'swal-title',
-                content: 'swal-content',
-                confirmButton: 'swal-button'
+          popup: 'swal-popup',
+          title: 'swal-title',
+          content: 'swal-content',
+          confirmButton: 'swal-button'
         }
-    });
+      });
     }
   };
 
