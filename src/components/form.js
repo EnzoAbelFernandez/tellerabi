@@ -15,12 +15,14 @@ class Form extends Component {
             transacciones: [],
             transaccionSeleccionada: '',
             modoVenta: false,
-            error: ''
+            error: '',
+            usuario: ''
         }
     }
 
     componentDidMount() {
         this.fetchData()
+        this.fetchDataUsuario()
     }
 
     // fetch a la api de criptos para obtener el nombre, valor y cotizacion de las cripto.
@@ -38,6 +40,44 @@ class Form extends Component {
             })
             .catch(err => console.error('error:' + err))
     }
+
+    //recibe la data del usuario desde la fake api
+    fetchDataUsuario = async () => {
+        try {
+          const response = await fetch('http://localhost:5000/0');
+          const data = await response.json();
+  
+          // actualiza el estado con los datos del JSON
+          this.setState({
+            usuario: data.usuario,
+            saldo: data.saldo,
+            transacciones: data.transacciones
+          })
+        } catch (error) {
+          console.error('Error al obtener los datos:', error);
+        }
+    }
+
+    //actualiza la data de la fakeapi
+    actualizarData = () => {
+        console.log("se");
+        const data = {
+            usuario: this.state.usuario,
+            saldo: this.state.saldo,
+            transacciones: this.state.transacciones
+        }
+        fetch('http://localhost:5000/0', {
+            method: 'PUT',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
+          })
+            .then(response => response.json())
+            .then(data => console.log('Usuario actualizado:', data))
+            .catch(error => console.error('Error al actualizar usuario:', error))
+    }
+
 
     // actualiza el state criptoEnUso con la cripto que se seleccione en el input select
     cambiarCripto = (e) => {
@@ -110,7 +150,10 @@ class Form extends Component {
 
         // si la cantidad de venta es igual a la cantidad poseida, elimina la transaccion directamente
         if (cantidadVenta == transaccionSeleccionada.cantidad) {
-            transaccionesActualizadas = transacciones.filter(t => t.id !== transaccionSeleccionada.id)
+            transaccionesActualizadas = transacciones.filter(t => t.id !== transaccionSeleccionada.id).map((transaccion, index) => ({
+                ...transaccion,
+                id: index + 1,
+              }))
         } 
         // si la cantidad de venta es menor que la cantidad poseida, le resta la cantidad y el valor vendido a la poseida
         else if (cantidadVenta && criptoEnUso && transaccionSeleccionada) {
@@ -147,13 +190,13 @@ class Form extends Component {
     }
 
     render() {
-        const { saldo, criptoEnUso, cantidad, criptos, transacciones, modoVenta, transaccionSeleccionada, error } = this.state
+        const { saldo, criptoEnUso, cantidad, criptos, transacciones, modoVenta, transaccionSeleccionada, error, usuario } = this.state
         return (
             <div>
                 <header className="header">
                     <img style={{width: "200px", height: "200px"}} src={logo} alt="logo"></img>
                 </header>
-                <UserProfile saldo={saldo} ingresar={this.ingresar} retirar={this.retirar}></UserProfile>
+                <UserProfile usuario={usuario} saldo={saldo} ingresar={this.ingresar} retirar={this.retirar}></UserProfile>
                 <div className="container">
                     <div className="form-group">
                         <label>Seleccione una Cripto:</label>
@@ -182,6 +225,7 @@ class Form extends Component {
                     </div>
                     <button className="btn button" onClick={modoVenta ? this.venderCripto : this.comprarCripto}>{modoVenta ? "Vender" : "Comprar"}</button>
                     <List criptos={criptos} transacciones={transacciones} actualizar={this.actualizar}></List>
+                    <button onClick={() => this.actualizarData()}>aaa</button>
                 </div>
             </div>
         )

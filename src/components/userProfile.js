@@ -4,7 +4,7 @@ import avatarGoku from '../assets/goku.jpg'
 import Modal from './modalDeposito';
 import ModalRetiro from './modalRetiro';
 
-const UserProfile = ({saldo, ingresar, retirar}) => {
+const UserProfile = ({saldo, ingresar, retirar, usuario}) => {
 
     const [formVisible, setFormVisible] = useState(false);
 
@@ -37,7 +37,7 @@ const UserProfile = ({saldo, ingresar, retirar}) => {
                     <img src={avatarGoku} alt='avatar'/>
                 </div>
                 <div className="user-details">
-                    <h2>Santi</h2>
+                    <h2>{usuario}</h2>
                     <div className="user-meta">
                         <span>ID de usuario: 00001</span>
                         <span>Tipo de usuario: Cuenta Normal</span>
