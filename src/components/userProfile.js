@@ -1,8 +1,33 @@
-import React from 'react'
+import React, { useState } from 'react'
 import '../styles/userProfile.css'
 import avatarGoku from '../assets/goku.jpg'
+import Modal from './modalDeposito';
+import ModalRetiro from './modalRetiro';
 
 const UserProfile = ({saldo}) => {
+    // Modal para Depositos
+    const [formVisible, setFormVisible] = useState(false);
+    const handleButtonClick = () =>{
+        setFormVisible(true);
+    }
+
+    const closeModal = () => {
+        setFormVisible(false);
+    }
+
+
+    // Modal para Retiros
+    const [isWithdrawalModalOpen, setIsWithdrawalModalOpen] = useState(false);
+
+    const handleWithdrawalButtonClick = () => {
+        setIsWithdrawalModalOpen(true);
+    };
+
+    const closeWithdrawalModal = () => {
+        setIsWithdrawalModalOpen(false);
+    };
+
+
     return (
         <div className="user-profile">
             <div className="user-info">
@@ -21,8 +46,12 @@ const UserProfile = ({saldo}) => {
                 <h3>Balance:</h3>
                 <p className="balance-amount">${saldo}</p>
                 <div className="balance-actions">
-                    <button>Depositar</button>
-                    <button>Retirar</button>
+                    <button onClick={handleButtonClick}>
+                        Depositar
+                    </button>
+                    {formVisible && <Modal closeModal={closeModal}/>}
+                    <button onClick={handleWithdrawalButtonClick}>Retirar</button>
+                    {isWithdrawalModalOpen && <ModalRetiro closeModal={closeWithdrawalModal} />}
                 </div>
             </div>
         </div>
