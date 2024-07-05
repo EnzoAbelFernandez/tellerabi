@@ -8,7 +8,7 @@ const ModalRetiro = ({ closeModal, retirar }) => {
   const [nota, setNota] = useState('');
 
 
-
+  // dispara la  alerta
   const handleSubmitRetiro = (event) => {
     event.preventDefault();
     Swal.fire({

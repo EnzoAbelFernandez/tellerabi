@@ -4,15 +4,21 @@ import '../styles/login.css';
 import Swal from 'sweetalert2';
 
 
-const Login = ({ setAuthenticated }) => {
+const Login = ({ setAuthenticated, setImage }) => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const navigate = useNavigate();
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    if (username === 'admin' && password === 'admin') {
-      setAuthenticated(true);
+    if (username === 'santi' && password === '1234') {
+      setAuthenticated('santi');
+      navigate('/dashboard');
+    } else if (username === 'enzo' && password === '1234'){
+      setAuthenticated('enzo');
+      navigate('/dashboard');
+    } else if (username === 'nacho' && password === '1234'){
+      setAuthenticated('nacho');
       navigate('/dashboard');
     } else {
       Swal.fire({

@@ -3,12 +3,16 @@ import '../styles/styles.css'
 import List from "./list"
 import UserProfile from "./userProfile"
 import logo from "../assets/logoN.png"
+import Swal from "sweetalert2"
+import goku from "../assets/goku.jpg"
+import vegetta from "../assets/vegetta.jpeg"
+import trunks from "../assets/trunks.jpeg"
 
 class Form extends Component {
     constructor() {
         super()
         this.state = {
-            saldo: 355074,
+            saldo:'',
             criptos: [],
             criptoEnUso: '',
             cantidad: '',
@@ -16,7 +20,8 @@ class Form extends Component {
             transaccionSeleccionada: '',
             modoVenta: false,
             error: '',
-            usuario: ''
+            usuario: '',
+            url: ''
         }
     }
 
@@ -47,8 +52,22 @@ class Form extends Component {
 
     //recibe la data del usuario desde la fake api
     fetchDataUsuario = async () => {
+        let url
+        let image
+        const {userAuth}  = this.props
+        if(userAuth === 'santi'){
+            url = 'http://localhost:5000/0'
+            image = goku
+          } else if (userAuth === 'enzo') {
+            url = 'http://localhost:5000/1'
+            image = trunks
+          } else if (userAuth === 'nacho') {
+            url = 'http://localhost:5000/2'
+            image = vegetta
+          }
+          this.setState({url, image})
         try {
-          const response = await fetch('http://localhost:5000/0');
+          const response = await fetch(url);
           const data = await response.json();
   
           // actualiza el estado con los datos del JSON
@@ -64,12 +83,13 @@ class Form extends Component {
 
     //actualiza la data de la fakeapi
     actualizarData = () => {
+        const url = this.state.url
         const data = {
             usuario: this.state.usuario,
             saldo: this.state.saldo,
             transacciones: this.state.transacciones
         }
-        fetch('http://localhost:5000/0', {
+        fetch(url, {
             method: 'PUT',
             headers: {
               'Content-Type': 'application/json'
@@ -84,7 +104,9 @@ class Form extends Component {
     // actualiza el state criptoEnUso con la cripto que se seleccione en el input select
     cambiarCripto = (e) => {
         const criptoSeleccionada = this.state.criptos.find(cripto => cripto.nombre === e.target.value)
-        this.setState({ criptoEnUso: criptoSeleccionada })
+        if(criptoSeleccionada){
+            this.setState({ criptoEnUso: criptoSeleccionada })
+        }
     }
 
     // actualiza el state cantidad con la cantidad que se ingrese
@@ -108,9 +130,10 @@ class Form extends Component {
         // si está todo correcto genera la transacción y actualiza el saldo, las transacciones añadiendo la nueva y resetea la cantidad
         if (criptoEnUso && cantidad && totalCompra <= saldo) {
             const nuevoSaldo = saldo - totalCompra
+            const nombre = this.state.usuario
             const nuevaTransaccion = {
                 id: transacciones.length + 1,
-                nombre: 'usuario',
+                nombre,
                 cripto: criptoEnUso.nombre,
                 cantidad,
                 total: totalCompra,
@@ -191,15 +214,45 @@ class Form extends Component {
         const saldo = this.state.saldo
         this.setState({saldo : saldo - valor})
     }
+    // alerta para asegurar
 
+    alertVender = (event) => {
+        event.preventDefault();
+        const { cantidad, criptoEnUso } = this.state;
+        Swal.fire({
+            title: '¿Estás seguro?',
+            text: `Venderás ${criptoEnUso.simbolo.toUpperCase()} ${cantidad}`,
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Aceptar',
+            cancelButtonText: 'Cancelar',
+            customClass: {
+                popup: 'swal-popup',
+                title: 'swal-title',
+                content: 'swal-content',
+                confirmButton: 'swal-button',
+                cancelButton: 'swal-cancel-button'
+            },
+            preConfirm: () => {
+                return this.venderCripto();
+            }
+        }).then((result) => {
+            if (result.isConfirmed) {
+                // Aquí puedes manejar el resultado de la promesa
+                console.log('Transacción exitosa');
+            }
+        });
+    };
+    
+    
     render() {
-        const { saldo, criptoEnUso, cantidad, criptos, transacciones, modoVenta, transaccionSeleccionada, error, usuario } = this.state
+        const { saldo, criptoEnUso, cantidad, criptos, transacciones, modoVenta, transaccionSeleccionada, error, usuario, image } = this.state
         return (
             <div>
                 <header className="header">
                     <img style={{width: "200px", height: "200px"}} src={logo} alt="logo"></img>
                 </header>
-                <UserProfile usuario={usuario} saldo={saldo} ingresar={this.ingresar} retirar={this.retirar}></UserProfile>
+                <UserProfile usuario={usuario} image={image} saldo={saldo} ingresar={this.ingresar} retirar={this.retirar}></UserProfile>
                 <div className="container">
                     <div className="form-group">
                         <label>Seleccione una Cripto:</label>
@@ -226,8 +279,8 @@ class Form extends Component {
                         <input type="text" className="form-control" value={criptoEnUso ? criptoEnUso.valor * cantidad : 0} readOnly />
                         {(error && !modoVenta) && <div className="alert alert-danger">{error}</div>}
                     </div>
-                    <button className="btn button" onClick={modoVenta ? this.venderCripto : this.comprarCripto}>{modoVenta ? "Vender" : "Comprar"}</button>
-                    <List criptos={criptos} transacciones={transacciones} actualizar={this.actualizar}></List>
+                    <button className="btn button" onClick={modoVenta ? this.alertVender : this.comprarCripto}>{modoVenta ? "Vender" : "Comprar"}</button>
+                    <List criptos={criptos} transacciones={transacciones} actualizar={this.actualizar} ></List>
                 </div>
             </div>
         )

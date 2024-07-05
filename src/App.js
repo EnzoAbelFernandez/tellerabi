@@ -15,7 +15,7 @@ function App(){
         <Route path="/login" element={<Login setAuthenticated={setAutenticado} />} />
         <Route
           path="/dashboard"
-          element={autenticado ? <Form/> : <Navigate to="/login" />}
+          element={autenticado ? <Form userAuth={autenticado}/> : <Navigate to="/login" />}
         />
         <Route path="/" element={<Navigate to="/login" />} />
       </Routes>

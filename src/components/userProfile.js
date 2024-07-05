@@ -1,10 +1,9 @@
 import React, { useState } from 'react'
 import '../styles/userProfile.css'
-import avatarGoku from '../assets/goku.jpg'
 import Modal from './modalDeposito';
 import ModalRetiro from './modalRetiro';
 
-const UserProfile = ({saldo, ingresar, retirar, usuario}) => {
+const UserProfile = ({saldo, ingresar, retirar, usuario, image}) => {
 
     const [formVisible, setFormVisible] = useState(false);
 
@@ -34,7 +33,7 @@ const UserProfile = ({saldo, ingresar, retirar, usuario}) => {
         <div className="user-profile">
             <div className="user-info">
                 <div className="user-avatar">
-                    <img src={avatarGoku} alt='avatar'/>
+                    <img src={image} alt='avatar'/>
                 </div>
                 <div className="user-details">
                     <h2>{usuario}</h2>
@@ -46,7 +45,7 @@ const UserProfile = ({saldo, ingresar, retirar, usuario}) => {
             </div>
             <div className="user-balance">
                 <h3>Balance:</h3>
-                <p className="balance-amount">${saldo}</p>
+                <p className="balance-amount">${Math.round(saldo)}</p>
                 <div className="balance-actions">
                     <button onClick={handleButtonClick}>
                         Depositar
