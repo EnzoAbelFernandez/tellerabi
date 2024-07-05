@@ -1,0 +1,68 @@
+[
+  {
+    "usuario": "Santi",
+    "saldo": 187317,
+    "transacciones": [
+      {
+        "id": 1,
+        "nombre": "Santi",
+        "cripto": "Solana",
+        "cantidad": "100",
+        "total": 12683,
+        "fecha": "4/7/2024"
+      }
+    ]
+  },
+  {
+    "usuario": "Enzo",
+    "saldo": 58697.14720000001,
+    "transacciones": [
+      {
+        "id": 1,
+        "nombre": "Enzo",
+        "cripto": "Cardano",
+        "cantidad": "150",
+        "total": 52.8528,
+        "fecha": "4/7/2024"
+      },
+      {
+        "id": 2,
+        "nombre": "Enzo",
+        "cripto": "Bitcoin",
+        "cantidad": "2",
+        "total": 114140,
+        "fecha": "4/7/2024"
+      },
+      {
+        "id": 3,
+        "nombre": "Enzo",
+        "cripto": "Solana",
+        "cantidad": "1000",
+        "total": 127110,
+        "fecha": "4/7/2024"
+      }
+    ]
+  },
+  {
+    "usuario": "Nacho",
+    "saldo": 340495.7308,
+    "transacciones": [
+      {
+        "id": 1,
+        "nombre": "Nacho",
+        "cripto": "Ethereum",
+        "cantidad": "3",
+        "total": 9219.57,
+        "fecha": "4/7/2024"
+      },
+      {
+        "id": 2,
+        "nombre": "Nacho",
+        "cripto": "Cardano",
+        "cantidad": "800",
+        "total": 284.6992,
+        "fecha": "4/7/2024"
+      }
+    ]
+  }
+]
